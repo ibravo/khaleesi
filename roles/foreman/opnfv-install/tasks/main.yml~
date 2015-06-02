@@ -188,6 +188,9 @@
 - name: Set new Foreman password as fact
   set_fact: foreman_admin_password="octopus"
 
+- name: Create LTG Centos repo
+  command: /usr/bin/hammer -u admin -p {{ foreman_admin_password }}  medium create --name "CentOS LTG" --os-family Redhat --path http://katello.hq.ltg/pulp/repos/LTG_Federal/Library/custom/CentOS7/Centos_7_x86_64
+
 - name: Hammer global parameters
   command: /usr/bin/hammer -u admin -p {{ foreman_admin_password }} global-parameter set --name {{item.key}} --value {{item.value}}
   register: param_result
